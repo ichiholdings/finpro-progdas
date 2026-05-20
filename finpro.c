@@ -24,8 +24,6 @@ typedef enum {
 
 // Menghitung poin berdasarkan jenis sampah, berat, dan streak user
 int hitungPoin(int jenis, int berat, int hari){
-    // Mengubah pengali dasar jenis sampah agar TERBAKAR (0) bernilai 1, dst.
-    
     if (hari < 1) return jenis * berat;
     else if (hari < 7) return (jenis * berat) * 1.25;
     else if (hari < 14) return (jenis * berat) * 1.5;
@@ -68,8 +66,7 @@ int createUser(){
 int findUser(){
     int i, j;
     char input_user[50];
-    do
-    {    
+    do{    
         printf("Masukkan nama pengguna: ");
         scanf(" %s", input_user);
         for (i = 0; i < user_size; i++) {
