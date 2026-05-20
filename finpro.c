@@ -85,7 +85,7 @@ int findUser(){
 }
 
 int pointexchange(int poin) {
-    bool loop,loop2;
+    bool loop = true, loop2 = true;
     int opsi,hitung,opsi2;
     do {
         printf("\n--- Menu Tukar Poin (Poin Anda: %d) ---\n",poin);
