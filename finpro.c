@@ -19,19 +19,16 @@ int user_size = 4;
 
 // Enum jenis sampah untuk memudahkan penghitungan poin berdasarkan jenis sampah
 typedef enum {
-    TERBAKAR, TAK_TERBAKAR, PLASTIK, BOTOL_KALENG, KERTAS, B3
+    TERBAKAR = 1, TAK_TERBAKAR, PLASTIK, BOTOL_KALENG, KERTAS, B3
 } jenisSampah;
 
 // Menghitung poin berdasarkan jenis sampah, berat, dan streak user
 int hitungPoin(int jenis, int berat, int hari){
-    // Mengubah pengali dasar jenis sampah agar TERBAKAR (0) bernilai 1, dst.
-    int pengali_jenis = jenis + 1; 
-    
-    if (hari < 1) return pengali_jenis * berat;
-    else if (hari < 7) return (pengali_jenis * berat) * 1.25;
-    else if (hari < 14) return (pengali_jenis * berat) * 1.5;
-    else if (hari < 21) return (pengali_jenis * berat) * 1.75;
-    else return (pengali_jenis * berat) * 2;
+    if (hari < 1) return jenis * berat;
+    else if (hari < 7) return (jenis * berat) * 1.25;
+    else if (hari < 14) return (jenis * berat) * 1.5;
+    else if (hari < 21) return (jenis * berat) * 1.75;
+    else return (jenis * berat) * 2;
 }
 
 // Compare password input dengan password referensi untuk login
@@ -90,7 +87,7 @@ int findUser(){
 }
 
 int main(){
-    jenisSampah jenis;
+    jenisSampah jenis = 1;
     int berat = 0, hari = 0, poin = 0, flag = 0, logged_in_user_index = 0;
 
     // Alokasi memori awal disesuaikan dengan ukuran struct user
@@ -150,8 +147,34 @@ int main(){
         
         switch (opsi){
             case 1:
-                // someone do this
+                printf("\nPilih Jenis Sampah:\n");
+                printf("1. Terbakar\n");
+                printf("2. Tak Terbakar\n");
+                printf("3. Plastik\n");
+                printf("4. Botol/Kaleng\n");
+                printf("5. Kertas\n");
+                printf("6. B3\n");
+
+                while (true){
+                    printf("Masukkan pilihan (1-6): ");
+                    scanf("%d", &jenis);
+                    if (jenis < 1 || jenis > 6){
+                        printf("Jenis sampah tidak valid!\n");
+                    } else break;
+                }
+
+                printf("Masukkan berat sampah (kg): ");
+                scanf("%d", &berat);
+
+                int poin_diperoleh = hitungPoin(jenis, berat, user_database_ptr[logged_in_user_index].hari);
+                user_database_ptr[logged_in_user_index].poin += poin_diperoleh;
+                user_database_ptr[logged_in_user_index].hari += 1;
+                
+                printf("\n--- Transaksi Berhasil ---\n");
+                printf("Poin didapat  : %d poin\n", poin_diperoleh);
+                printf("Total poin Anda sekarang: %d poin\n", user_database_ptr[logged_in_user_index].poin);
                 break;
+
             case 2:
                 printf("\n--- Informasi Poin Pengguna ---\n");
                 printf("Nama Pengguna : %s\n", user_database_ptr[logged_in_user_index].nama);
