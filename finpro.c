@@ -163,7 +163,7 @@ int main(){
             printf("Jumlah poin yang diakumulasi Anda: %d", poin);
             break;
         case 2:
-            // someone do this 
+            printf("Poin yang dimiliki sekarang: %d", poin);
             break;
         case 3:
             // someone do this
