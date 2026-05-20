@@ -141,28 +141,6 @@ int main(){
         return 0;
     }
 
-    printf("\nTerimakasih Telah Mempercayai Layanan Kami!\n");
-    printf("Menu:\n");
-    printf("1. Mendaur Ulang\n");
-    printf("2. Cek Poin\n");
-    printf("3. Tukar Poin\n");
-    printf("4. Akun\n");
-    printf("5. Keluar\n");
-    printf("Pilih opsi: ");
-    scanf("%d", &opsi);
-
-    if (opsi == 1) {
-        int pilihan_user, jenis, berat;
-        printf("\nPilih Jenis Sampah:\n");
-        printf("1. Terbakar\n");
-        printf("2. Tak Terbakar\n");
-        printf("3. Plastik\n");
-        printf("4. Botol/Kaleng\n");
-        printf("5. Kertas\n");
-        printf("6. B3\n");
-        printf("Masukkan pilihan (1-6): ");
-        scanf("%d", &pilihan_user);
-
 
     printf("\nTerimakasih Telah Mempercayai Layanan Kami!\n");
     printf("Menu:\n");
@@ -231,3 +209,4 @@ int main(){
             printf("Opsi tidak valid!\n");
             break;
     }
+}
