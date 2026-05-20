@@ -223,7 +223,7 @@ int main(){
 
         if (opsi == 1){
             char input_pw[50];
-            int token;
+            bool token;
             do{
                 int user_index = findUser();
                 printf("Masukkan password: ");
