@@ -17,21 +17,24 @@ user user_database[24];
 user* user_database_ptr = user_database;
 int user_size = 4;
 
-//Enum jenis sampah untuk memudahkan penghitungan poin berdasarkan jenis sampah
+// Enum jenis sampah untuk memudahkan penghitungan poin berdasarkan jenis sampah
 typedef enum {
     TERBAKAR, TAK_TERBAKAR, PLASTIK, BOTOL_KALENG, KERTAS, B3
 } jenisSampah;
 
-//Menghitung poin berdasarkan jenis sampah, berat, dan streak user
+// Menghitung poin berdasarkan jenis sampah, berat, dan streak user
 int hitungPoin(int jenis, int berat, int hari){
-    if (hari < 1) return jenis * berat;
-    else if (hari < 7) return (jenis * berat) * 1.25;
-    else if (hari < 14) return (jenis * berat) * 1.5;
-    else if (hari < 21) return (jenis * berat) * 1.75;
-    else return (jenis * berat) * 2;
+    // Mengubah pengali dasar jenis sampah agar TERBAKAR (0) bernilai 1, dst.
+    int pengali_jenis = jenis + 1; 
+    
+    if (hari < 1) return pengali_jenis * berat;
+    else if (hari < 7) return (pengali_jenis * berat) * 1.25;
+    else if (hari < 14) return (pengali_jenis * berat) * 1.5;
+    else if (hari < 21) return (pengali_jenis * berat) * 1.75;
+    else return (pengali_jenis * berat) * 2;
 }
 
-//Compare password input dengan password referensi untuk login
+// Compare password input dengan password referensi untuk login
 bool login(char ref_pw[50], char input_pw[50]){
     if (strcmp(ref_pw, input_pw) != 0) 
         return false;
@@ -55,13 +58,13 @@ void createUser(){
         user_database_ptr = tmp;
         strcpy(user_database_ptr[user_size - 1].nama, nama);
         strcpy(user_database_ptr[user_size - 1].alamat, alamat);
-        strcpy(strcpy(user_database_ptr[user_size - 1].pw, pw), pw);
+        strcpy(user_database_ptr[user_size - 1].pw, pw);
         user_database_ptr[user_size - 1].hari = 0;
         user_database_ptr[user_size - 1].poin = 0;
     }
 }
 
-//Mencari user index berdasarkan nama yang diinputkan
+// Mencari user index berdasarkan nama yang diinputkan
 int findUser(){
     int i, j;
     char input_user[50];
@@ -85,6 +88,121 @@ int findUser(){
     return j;
 }
 
+int pointexchange(int poin) {
+    bool loop,loop2;
+    int opsi,hitung,opsi2;
+    do {
+        printf("\n--- Menu Tukar Poin (Poin Anda: %d) ---\n",poin);
+        printf("1. Voucher Makanan (10 Poin)\n");
+        printf("2. Voucher Pakaian (45 Poin)\n");
+        printf("3. Voucher Peralatan (80 Poin)\n");
+        printf("4. Merch\n");
+        printf("5. Balik Ke Menu Utama\n");
+        printf("Pilih: ");
+        scanf("%d",&opsi);
+
+        switch (opsi) {
+            case 1:
+                hitung=poin-10;
+                if (hitung<0) {
+                    printf("Poin anda kurang\n");
+                }
+                else {
+                    poin=hitung;
+                    printf("Selamat Anda Mendapatkan Voucher Makanan\n");
+                    printf("Jumlah Poin Anda: %d\n",poin);
+                }
+                break;
+            case 2:
+                hitung=poin-45;
+                if (hitung<0) {
+                    printf("Poin anda kurang\n");
+                }
+                else {
+                    poin=hitung;
+                    printf("Selamat Anda Mendapatkan Voucher Pakaian\n");
+                    printf("Jumlah Poin Anda: %d\n",poin);
+                }
+                break;
+            case 3:
+                hitung=poin-80;
+                if (hitung<0) {
+                    printf("Poin anda kurang\n");
+                }
+                else {
+                    poin=hitung;
+                    printf("Selamat Anda Mendapatkan Voucher Peralatan\n");
+                    printf("Jumlah Poin Anda: %d\n",poin);
+                }
+                break;
+            case 4:
+                do{
+                    printf("\nPilih Merch: \n");
+                    printf("1. Tumbler (30 Poin)\n");
+                    printf("2. Tote Bag (20 Poin)\n");
+                    printf("3. Alat Tulis (15 Poin)\n");
+                    printf("4. Balik ke Menu\n");
+                    printf("Pilih: ");
+                    scanf("%d",&opsi2);
+
+                    switch (opsi2) {
+                        case 1:
+                            hitung=poin-80;
+                            if (hitung<0) {
+                                printf("Poin anda kurang\n");
+                            }
+                            else {
+                                poin=hitung;
+                                printf("Selamat Anda Mendapatkan Tumbler\n");
+                                printf("Jumlah Poin Anda: %d\n",poin);
+                            }
+                            break;
+                        case 2:
+                            hitung=poin-80;
+                            if (hitung<0) {
+                                printf("Poin anda kurang\n");
+                            }
+                            else {
+                                poin=hitung;
+                                printf("Selamat Anda Mendapatkan Tote Bag\n");
+                                printf("Jumlah Poin Anda: %d\n",poin);
+                            }
+                            break;
+                        case 3:
+                            hitung=poin-80;
+                            if (hitung<0) {
+                                printf("Poin anda kurang\n");
+                            }
+                            else {
+                                poin=hitung;
+                                printf("Selamat Anda Mendapatkan Alat Tulis\n");
+                                printf("Jumlah Poin Anda: %d\n",poin);
+                            }
+                            break;
+                        case 4:
+                            loop2=false;
+                            break;
+                        default:
+                            printf("Pilih Opsi yang Valid\n");
+                            break;
+                    }
+
+                }while(loop2!=false);
+                
+                break;
+            case 5:
+                loop=false;
+                break;
+            default:
+                printf("Pilih Opsi yang Valid!\n");
+                break;
+        }
+    } while (loop!=false);
+
+    return poin;
+    
+}
+
 char** users;
 
 int main(){
@@ -104,10 +222,11 @@ int main(){
     int opsi;
     scanf("%d", &opsi);
 
+    int logged_in_user_index = -1; 
+
     if (opsi == 1) 
     {
         char input_pw[50];
-        char input_user[50];
         int token;
         do
         {
@@ -119,32 +238,94 @@ int main(){
 
             if (token) {
                 printf("Login berhasil!\n");
+                logged_in_user_index = user_index;
             } else {
                 printf("Login gagal! Password salah.\n");
             }
-            int logged_in_user_index = user_index;
         } while (!token);
     } 
     else if (opsi == 2) 
     {
         createUser();
+        logged_in_user_index = user_size - 1;
     } 
     else 
     {
         printf("Opsi tidak valid.\n");
+        free(user_database_ptr);
+        return 0;
     }
+    bool stat;
+    do{
+        printf("\nTerimakasih Telah Mempercayai Layanan Kami!\n");
+        printf("Menu:\n");
+        printf("1. Mendaur Ulang\n");
+        printf("2. Cek Poin\n");
+        printf("3. Tukar Poin\n");
+        printf("4. Akun (Belum Tersedia)\n");
+        printf("5. Keluar\n");
+        printf("Pilih opsi: ");
+        scanf("%d", &opsi);
 
-    printf("Terimakasih Telah Mempercacyai Layanani Kami!\n");
-    printf("Menu:\n");
-    printf("1. Mendaur Ulang\n");
-    printf("2. Cek Poin\n");
-    printf("3. Tukar Poin\n");
-    printf("4. Akun\n");
-    printf("5. Keluar\n");
-    printf("Pilih opsi: ");
-    scanf("%d", &opsi);
+        
+        switch (opsi) {
+            case 1: {
+                int pilihan_user, jenis, berat;
+                printf("\nPilih Jenis Sampah:\n");
+                printf("1. Terbakar\n");
+                printf("2. Tak Terbakar\n");
+                printf("3. Plastik\n");
+                printf("4. Botol/Kaleng\n");
+                printf("5. Kertas\n");
+                printf("6. B3\n");
+                printf("Masukkan pilihan (1-6): ");
+                scanf("%d", &pilihan_user);
 
-    printf("Terima Kasih Telah Menggunakan Layanan Kami!\n");
-    free(user_database_ptr);
-    return 0;
+                if (pilihan_user >= 1 && pilihan_user <= 6) {
+                    jenis = pilihan_user - 1;
+
+                    printf("Masukkan berat sampah (kg): ");
+                    scanf("%d", &berat);
+
+                    int poin_diperoleh = hitungPoin(jenis, berat, user_database_ptr[logged_in_user_index].hari);
+                    
+                    user_database_ptr[logged_in_user_index].poin += poin_diperoleh;
+                    user_database_ptr[logged_in_user_index].hari += 1; 
+
+                    printf("\n--- Transaksi Berhasil ---\n");
+                    printf("Poin didapat  : %d poin\n", poin_diperoleh);
+                    printf("Total poin Anda sekarang: %d poin\n", user_database_ptr[logged_in_user_index].poin);
+                } else {
+                    printf("Jenis sampah tidak valid!\n");
+                }
+                break;
+        }
+
+            case 2: {
+                printf("\n--- Informasi Poin Pengguna ---\n");
+                printf("Nama Pengguna : %s\n", user_database_ptr[logged_in_user_index].nama);
+                printf("Streak Hari   : %d hari\n", user_database_ptr[logged_in_user_index].hari);
+                printf("Total Poin    : %d poin\n", user_database_ptr[logged_in_user_index].poin);
+                break;
+            }
+
+            case 3:
+                user_database_ptr[logged_in_user_index].poin=pointexchange(user_database_ptr[logged_in_user_index].poin);
+                break;
+
+            case 4:
+
+                break;
+
+            case 5:
+                printf("Keluar dari sistem.\n");
+                stat=false;
+                break;
+
+            default:
+                printf("Opsi tidak valid!\n");
+                break;
+        }
+    }while (stat!=false);
+    
 }
