@@ -23,7 +23,7 @@ typedef enum {
 } jenisSampah;
 
 //Menghitung poin berdasarkan jenis sampah, berat, dan streak user
-int hitungPoin(int jenis, int berat, int hari){
+int hitungPoin(jenisSampah jenis, int berat, int hari){
     if (hari < 1) return jenis * berat;
     else if (hari < 7) return (jenis * berat) * 1.25;
     else if (hari < 14) return (jenis * berat) * 1.5;
@@ -87,7 +87,13 @@ int findUser(){
 
 char** users;
 
+
 int main(){
+    jenisSampah jenis;
+    int berat = 0;
+    int hari = 0;
+    int poin = 0;
+
     // Alokasi memori awal disesuaikan dengan ukuran struct user
     user_database_ptr = (user*)malloc(user_size * sizeof(user));
     
@@ -131,7 +137,7 @@ int main(){
     } 
     else 
     {
-        printf("Opsi tidak valid.\n");
+            printf("Opsi tidak valid.\n");
     }
 
     printf("Terimakasih Telah Mempercacyai Layanani Kami!\n");
@@ -143,6 +149,32 @@ int main(){
     printf("5. Keluar\n");
     printf("Pilih opsi: ");
     scanf("%d", &opsi);
+
+    switch (opsi){
+        case 1:
+            printf("Jenis sampah: ");
+            scanf("%d", &jenis);
+            printf("Berat sampah: ");
+            scanf("%d", &berat);
+            printf("Sudah berapa hari mendaur ulang sampah? ");
+            scanf("%d", &hari);
+            
+            poin = hitungPoin(jenis, berat, hari);
+            printf("Jumlah poin yang diakumulasi Anda: %d", poin);
+            break;
+        case 2:
+            // someone do this 
+            break;
+        case 3:
+            // someone do this
+            break;
+        case 4:
+            // someone do this
+            break;
+        case 5:
+            // someone do this
+            break;
+    } 
 
     printf("Terima Kasih Telah Menggunakan Layanan Kami!\n");
     free(user_database_ptr);
