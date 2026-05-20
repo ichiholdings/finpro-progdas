@@ -42,14 +42,14 @@ bool login(char ref_pw[50], char input_pw[50]){
 }
 
 // Membuat user baru dengan mengalokasikan memori dinamis untuk database dan mengisi data user baru ke dalam database
-void createUser(){ 
+int createUser(){ 
     char nama[50], alamat[50], pw[50];
     printf("Masukkan nama: ");
     scanf("%s", nama);
     printf("Masukkan alamat: ");
     scanf("%s", alamat);
     printf("Masukkan password: ");
-    scanf("%s", pw);
+    scanf(" %s", pw);
     
     // Logika pengisian data user baru ke database dinamis
     user_size++;
@@ -62,6 +62,7 @@ void createUser(){
         user_database_ptr[user_size - 1].hari = 0;
         user_database_ptr[user_size - 1].poin = 0;
     }
+    return user_size-1;
 }
 
 // Mencari user index berdasarkan nama yang diinputkan
@@ -88,9 +89,10 @@ int findUser(){
     return j;
 }
 
-char** users;
-
 int main(){
+    jenisSampah jenis;
+    int berat = 0, hari = 0, poin = 0, flag = 0, logged_in_user_index = 0;
+
     // Alokasi memori awal disesuaikan dengan ukuran struct user
     user_database_ptr = (user*)malloc(user_size * sizeof(user));
     
@@ -107,14 +109,10 @@ int main(){
     int opsi;
     scanf("%d", &opsi);
 
-    int logged_in_user_index = -1; 
-
-    if (opsi == 1) 
-    {
+    if (opsi == 1){
         char input_pw[50];
         int token;
-        do
-        {
+        do{
             int user_index = findUser();
             printf("Masukkan password: ");
             scanf(" %s", input_pw);
@@ -122,91 +120,61 @@ int main(){
             token = login(user_database_ptr[user_index].pw, input_pw);
 
             if (token) {
-                printf("Login berhasil!\n");
-                logged_in_user_index = user_index;
+                printf("\nLogin berhasil!\n");
             } else {
-                printf("Login gagal! Password salah.\n");
+                printf("\nLogin gagal! Password salah.\n");
             }
+            logged_in_user_index = user_index;
         } while (!token);
     } 
-    else if (opsi == 2) 
-    {
-        createUser();
-        logged_in_user_index = user_size - 1;
+    else if (opsi == 2) {
+        logged_in_user_index = createUser();
     } 
-    else 
-    {
+    else{
         printf("Opsi tidak valid.\n");
         free(user_database_ptr);
         return 0;
     }
 
+    printf("Terimakasih Telah Mempercayai Layanan Kami!\n");
 
-    printf("\nTerimakasih Telah Mempercayai Layanan Kami!\n");
-    printf("Menu:\n");
-    printf("1. Mendaur Ulang\n");
-    printf("2. Cek Poin\n");
-    printf("3. Tukar Poin (Belum Tersedia)\n");
-    printf("4. Akun (Belum Tersedia)\n");
-    printf("5. Keluar\n");
-    printf("Pilih opsi: ");
-    scanf("%d", &opsi);
-
-    switch (opsi) {
-        case 1: {
-            int pilihan_user, jenis, berat;
-            printf("\nPilih Jenis Sampah:\n");
-            printf("1. Terbakar\n");
-            printf("2. Tak Terbakar\n");
-            printf("3. Plastik\n");
-            printf("4. Botol/Kaleng\n");
-            printf("5. Kertas\n");
-            printf("6. B3\n");
-            printf("Masukkan pilihan (1-6): ");
-            scanf("%d", &pilihan_user);
-
-            if (pilihan_user >= 1 && pilihan_user <= 6) {
-                jenis = pilihan_user - 1;
-
-                printf("Masukkan berat sampah (kg): ");
-                scanf("%d", &berat);
-
-                int poin_diperoleh = hitungPoin(jenis, berat, user_database_ptr[logged_in_user_index].hari);
-                
-                user_database_ptr[logged_in_user_index].poin += poin_diperoleh;
-                user_database_ptr[logged_in_user_index].hari += 1; 
-
-                printf("\n--- Transaksi Berhasil ---\n");
-                printf("Poin didapat  : %d poin\n", poin_diperoleh);
-                printf("Total poin Anda sekarang: %d poin\n", user_database_ptr[logged_in_user_index].poin);
-            } else {
-                printf("Jenis sampah tidak valid!\n");
-            }
-            break;
-        }
-
-        case 2: {
-            printf("\n--- Informasi Poin Pengguna ---\n");
-            printf("Nama Pengguna : %s\n", user_database_ptr[logged_in_user_index].nama);
-            printf("Streak Hari   : %d hari\n", user_database_ptr[logged_in_user_index].hari);
-            printf("Total Poin    : %d poin\n", user_database_ptr[logged_in_user_index].poin);
-            break;
-        }
-
-        case 3:
-
-            break;
-
-        case 4:
-
-            break;
-
-        case 5:
-            printf("Keluar dari sistem.\n");
-            break;
-
-        default:
-            printf("Opsi tidak valid!\n");
-            break;
+    while (flag == 0){
+        printf("\nMenu:\n");
+        printf("1. Mendaur Ulang\n");
+        printf("2. Cek Poin\n");
+        printf("3. Tukar Poin\n");
+        printf("4. Akun\n");
+        printf("5. Keluar\n");
+        printf("Pilih opsi: ");
+        scanf("%d", &opsi);
+        
+        switch (opsi){
+            case 1:
+                // someone do this
+                break;
+            case 2:
+                printf("\n--- Informasi Poin Pengguna ---\n");
+                printf("Nama Pengguna : %s\n", user_database_ptr[logged_in_user_index].nama);
+                printf("Streak Hari   : %d hari\n", user_database_ptr[logged_in_user_index].hari);
+                printf("Total Poin    : %d poin\n", user_database_ptr[logged_in_user_index].poin);
+                break;
+            case 3:
+                // someone do this
+                break;
+            case 4:
+                printf("\nNama Anda: %s\n", user_database_ptr[logged_in_user_index].nama);
+                printf("Alamat Anda: %s\n", user_database_ptr[logged_in_user_index].alamat);
+                printf("Jumlah hari Anda telah menyimpan sampah berturut-turut: %d\n", user_database_ptr[logged_in_user_index].hari);
+                break;
+            case 5:
+                flag++;
+                break;
+            default:
+                printf("\nOpsi invalid!");
+                break;
+        } 
     }
+    printf("Terima Kasih Telah Menggunakan Layanan Kami!\n");
+    free(user_database_ptr);
+    return 0;
 }
