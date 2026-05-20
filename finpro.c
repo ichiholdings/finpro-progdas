@@ -17,21 +17,24 @@ user user_database[24];
 user* user_database_ptr = user_database;
 int user_size = 4;
 
-//Enum jenis sampah untuk memudahkan penghitungan poin berdasarkan jenis sampah
+// Enum jenis sampah untuk memudahkan penghitungan poin berdasarkan jenis sampah
 typedef enum {
     TERBAKAR, TAK_TERBAKAR, PLASTIK, BOTOL_KALENG, KERTAS, B3
 } jenisSampah;
 
-//Menghitung poin berdasarkan jenis sampah, berat, dan streak user
-int hitungPoin(jenisSampah jenis, int berat, int hari){
-    if (hari < 1) return jenis * berat;
-    else if (hari < 7) return (jenis * berat) * 1.25;
-    else if (hari < 14) return (jenis * berat) * 1.5;
-    else if (hari < 21) return (jenis * berat) * 1.75;
-    else return (jenis * berat) * 2;
+// Menghitung poin berdasarkan jenis sampah, berat, dan streak user
+int hitungPoin(int jenis, int berat, int hari){
+    // Mengubah pengali dasar jenis sampah agar TERBAKAR (0) bernilai 1, dst.
+    int pengali_jenis = jenis + 1; 
+    
+    if (hari < 1) return pengali_jenis * berat;
+    else if (hari < 7) return (pengali_jenis * berat) * 1.25;
+    else if (hari < 14) return (pengali_jenis * berat) * 1.5;
+    else if (hari < 21) return (pengali_jenis * berat) * 1.75;
+    else return (pengali_jenis * berat) * 2;
 }
 
-//Compare password input dengan password referensi untuk login
+// Compare password input dengan password referensi untuk login
 bool login(char ref_pw[50], char input_pw[50]){
     if (strcmp(ref_pw, input_pw) != 0) 
         return false;
@@ -55,14 +58,14 @@ int createUser(){
         user_database_ptr = tmp;
         strcpy(user_database_ptr[user_size - 1].nama, nama);
         strcpy(user_database_ptr[user_size - 1].alamat, alamat);
-        strcpy(strcpy(user_database_ptr[user_size - 1].pw, pw), pw);
+        strcpy(user_database_ptr[user_size - 1].pw, pw);
         user_database_ptr[user_size - 1].hari = 0;
         user_database_ptr[user_size - 1].poin = 0;
     }
     return user_size-1;
 }
 
-//Mencari user index berdasarkan nama yang diinputkan
+// Mencari user index berdasarkan nama yang diinputkan
 int findUser(){
     int i, j;
     char input_user[50];
@@ -108,7 +111,6 @@ int main(){
 
     if (opsi == 1){
         char input_pw[50];
-        char input_user[50];
         int token;
         do{
             int user_index = findUser();
@@ -130,6 +132,8 @@ int main(){
     } 
     else{
         printf("Opsi tidak valid.\n");
+        free(user_database_ptr);
+        return 0;
     }
 
     printf("Terimakasih Telah Mempercayai Layanan Kami!\n");
@@ -149,7 +153,10 @@ int main(){
                 // someone do this
                 break;
             case 2:
-                // someone do this
+                printf("\n--- Informasi Poin Pengguna ---\n");
+                printf("Nama Pengguna : %s\n", user_database_ptr[logged_in_user_index].nama);
+                printf("Streak Hari   : %d hari\n", user_database_ptr[logged_in_user_index].hari);
+                printf("Total Poin    : %d poin\n", user_database_ptr[logged_in_user_index].poin);
                 break;
             case 3:
                 // someone do this
