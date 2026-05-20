@@ -85,9 +85,6 @@ int findUser(){
     return j;
 }
 
-char** users;
-
-
 int main(){
     jenisSampah jenis;
     int berat = 0;
@@ -110,13 +107,11 @@ int main(){
     int opsi;
     scanf("%d", &opsi);
 
-    if (opsi == 1) 
-    {
+    if (opsi == 1){
         char input_pw[50];
         char input_user[50];
         int token;
-        do
-        {
+        do{
             int user_index = findUser();
             printf("Masukkan password: ");
             scanf(" %s", input_pw);
@@ -131,16 +126,14 @@ int main(){
             int logged_in_user_index = user_index;
         } while (!token);
     } 
-    else if (opsi == 2) 
-    {
+    else if (opsi == 2) {
         createUser();
     } 
-    else 
-    {
-            printf("Opsi tidak valid.\n");
+    else{
+        printf("Opsi tidak valid.\n");
     }
 
-    printf("Terimakasih Telah Mempercacyai Layanani Kami!\n");
+    printf("Terimakasih Telah Mempercacyai Layanan Kami!\n");
     printf("Menu:\n");
     printf("1. Mendaur Ulang\n");
     printf("2. Cek Poin\n");
@@ -152,27 +145,20 @@ int main(){
 
     switch (opsi){
         case 1:
-            printf("Jenis sampah: ");
-            scanf("%d", &jenis);
-            printf("Berat sampah: ");
-            scanf("%d", &berat);
-            printf("Sudah berapa hari mendaur ulang sampah? ");
-            scanf("%d", &hari);
-            
-            poin = hitungPoin(jenis, berat, hari);
-            printf("Jumlah poin yang diakumulasi Anda: %d", poin);
+            // someone do this
             break;
         case 2:
-            printf("Poin yang dimiliki sekarang: %d", poin);
+            // someone do this
             break;
         case 3:
             // someone do this
             break;
         case 4:
-            // someone do this
+            printf("Nama Anda: %s", user_database_ptr[logged_in_user_index].nama);
+            printf("Alamat Anda: %s", user_database_ptr[logged_in_user_index].alamat);
+            printf("Jumlah hari Anda telah menyimpan sampah berturut-turut: %d", user_database_ptr[logged_in_user_index].hari);
             break;
         case 5:
-            // someone do this
             break;
     } 
 
