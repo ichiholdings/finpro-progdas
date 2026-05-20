@@ -13,8 +13,7 @@ typedef struct {
 } user;
 
 // Inisialisasi database dan pointer untuk database dinamis
-user user_database[24];
-user* user_database_ptr = user_database;
+user* user_database_ptr = NULL;
 int user_size = 4;
 
 // Enum jenis sampah untuk memudahkan penghitungan poin berdasarkan jenis sampah
@@ -144,7 +143,7 @@ int pointexchange(int poin) {
 
                     switch (opsi2) {
                         case 1:
-                            hitung=poin-80;
+                            hitung=poin-30;
                             if (hitung<0) {
                                 printf("Poin anda kurang\n");
                             }
@@ -155,7 +154,7 @@ int pointexchange(int poin) {
                             }
                             break;
                         case 2:
-                            hitung=poin-80;
+                            hitung=poin-20;
                             if (hitung<0) {
                                 printf("Poin anda kurang\n");
                             }
@@ -166,7 +165,7 @@ int pointexchange(int poin) {
                             }
                             break;
                         case 3:
-                            hitung=poin-80;
+                            hitung=poin-15;
                             if (hitung<0) {
                                 printf("Poin anda kurang\n");
                             }
@@ -247,6 +246,8 @@ int main(){
     }
 
     printf("Terimakasih Telah Mempercayai Layanan Kami!\n");
+
+    flag = 0;
     while (flag == 0){
         printf("\nMenu:\n");
         printf("1. Mendaur Ulang\n");
