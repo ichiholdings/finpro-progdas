@@ -39,14 +39,14 @@ bool login(char ref_pw[50], char input_pw[50]){
 }
 
 // Membuat user baru dengan mengalokasikan memori dinamis untuk database dan mengisi data user baru ke dalam database
-void createUser(){ 
+int createUser(){ 
     char nama[50], alamat[50], pw[50];
     printf("Masukkan nama: ");
     scanf("%s", nama);
     printf("Masukkan alamat: ");
     scanf("%s", alamat);
     printf("Masukkan password: ");
-    scanf("%s", pw);
+    scanf(" %s", pw);
     
     // Logika pengisian data user baru ke database dinamis
     user_size++;
@@ -59,6 +59,7 @@ void createUser(){
         user_database_ptr[user_size - 1].hari = 0;
         user_database_ptr[user_size - 1].poin = 0;
     }
+    return user_size-1;
 }
 
 //Mencari user index berdasarkan nama yang diinputkan
@@ -87,9 +88,7 @@ int findUser(){
 
 int main(){
     jenisSampah jenis;
-    int berat = 0;
-    int hari = 0;
-    int poin = 0;
+    int berat = 0, hari = 0, poin = 0, flag = 0, logged_in_user_index = 0;
 
     // Alokasi memori awal disesuaikan dengan ukuran struct user
     user_database_ptr = (user*)malloc(user_size * sizeof(user));
@@ -119,49 +118,55 @@ int main(){
             token = login(user_database_ptr[user_index].pw, input_pw);
 
             if (token) {
-                printf("Login berhasil!\n");
+                printf("\nLogin berhasil!\n");
             } else {
-                printf("Login gagal! Password salah.\n");
+                printf("\nLogin gagal! Password salah.\n");
             }
-            int logged_in_user_index = user_index;
+            logged_in_user_index = user_index;
         } while (!token);
     } 
     else if (opsi == 2) {
-        createUser();
+        logged_in_user_index = createUser();
     } 
     else{
         printf("Opsi tidak valid.\n");
     }
 
-    printf("Terimakasih Telah Mempercacyai Layanan Kami!\n");
-    printf("Menu:\n");
-    printf("1. Mendaur Ulang\n");
-    printf("2. Cek Poin\n");
-    printf("3. Tukar Poin\n");
-    printf("4. Akun\n");
-    printf("5. Keluar\n");
-    printf("Pilih opsi: ");
-    scanf("%d", &opsi);
+    printf("Terimakasih Telah Mempercayai Layanan Kami!\n");
 
-    switch (opsi){
-        case 1:
-            // someone do this
-            break;
-        case 2:
-            // someone do this
-            break;
-        case 3:
-            // someone do this
-            break;
-        case 4:
-            printf("Nama Anda: %s", user_database_ptr[logged_in_user_index].nama);
-            printf("Alamat Anda: %s", user_database_ptr[logged_in_user_index].alamat);
-            printf("Jumlah hari Anda telah menyimpan sampah berturut-turut: %d", user_database_ptr[logged_in_user_index].hari);
-            break;
-        case 5:
-            break;
-    } 
-
+    while (flag == 0){
+        printf("\nMenu:\n");
+        printf("1. Mendaur Ulang\n");
+        printf("2. Cek Poin\n");
+        printf("3. Tukar Poin\n");
+        printf("4. Akun\n");
+        printf("5. Keluar\n");
+        printf("Pilih opsi: ");
+        scanf("%d", &opsi);
+        
+        switch (opsi){
+            case 1:
+                // someone do this
+                break;
+            case 2:
+                // someone do this
+                break;
+            case 3:
+                // someone do this
+                break;
+            case 4:
+                printf("\nNama Anda: %s\n", user_database_ptr[logged_in_user_index].nama);
+                printf("Alamat Anda: %s\n", user_database_ptr[logged_in_user_index].alamat);
+                printf("Jumlah hari Anda telah menyimpan sampah berturut-turut: %d\n", user_database_ptr[logged_in_user_index].hari);
+                break;
+            case 5:
+                flag++;
+                break;
+            default:
+                printf("\nOpsi invalid!");
+                break;
+        } 
+    }
     printf("Terima Kasih Telah Menggunakan Layanan Kami!\n");
     free(user_database_ptr);
     return 0;
